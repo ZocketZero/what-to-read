@@ -5,7 +5,7 @@ const Github: FC = () => {
     <div className="fixed bottom-0 p-1 right-0 opacity-90 hover:opacity-100 transition-all ">
       <a
         target="_blank"
-        href="https://github.com/Arikato111/what-to-read"
+        href="https://github.com/ZocketZero/what-to-read"
         title="ดู source code บน Github"
       >
         <div className="inline-block w-12 mb-2 fill-black dark:fill-white">
