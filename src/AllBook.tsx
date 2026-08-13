@@ -8,32 +8,33 @@ import ToggleMode from "./components/ToggleMode";
 
 const ShowAllBook: FC = () => {
   return (
-    <div className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 grid">
-      {/* loop to show all books */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-2 px-4 pb-20">
       {BookList.map((book, id) => {
         return (
-          <div key={id} className="pb-10">
-            <div className="text-center text-slate-800 dark:text-white  text-xl sm:text-lg">
-              <Link
-                className="hover:underline inline-block transition-all"
-                to={`/${book.name}`}
-                title="คลิกเพื่อชมสิ่งที่หน้าสนใจ"
-              >
-                <b>{book.name}</b>
-              </Link>
-            </div>
-            <div className="text-center text-lg sm:text-base p-1 text-slate-600 dark:text-white">
-              <a
-                title="คลิกเพื่อค้นหาผู้เขียนบน Google"
-                className="underline sm:no-underline hover:underline inline-block"
-                target={"_blank"}
-                href={`https://www.google.com/search?q=${book.writer}`}
-              >
-                ผู้เขียน <b>{book.writer}</b>
-              </a>
-            </div>
+          <div key={id} className="book-card">
+            {/* Cover */}
             <ImgShow img={book.img} url={book.link ?? ""} name={book.name} />
-            <div></div>
+
+            {/* Title */}
+            <Link
+              className="book-title text-sm sm:text-base mt-1 line-clamp-2"
+              to={`/${book.name}`}
+              title="คลิกเพื่อดูรายละเอียด"
+            >
+              {book.name}
+            </Link>
+
+            {/* Author */}
+            <a
+              title="คลิกเพื่อค้นหาผู้เขียนบน Google"
+              className="author-link text-xs sm:text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://www.google.com/search?q=${book.writer}`}
+            >
+              <span style={{ color: "var(--text-3)" }}>by</span>
+              <span className="font-semibold">{book.writer}</span>
+            </a>
           </div>
         );
       })}
@@ -45,19 +46,22 @@ const AllBook: FC = () => {
   useEffect(() => {
     document.title = "หนังสือทั้งหมด";
   }, []);
+
   return (
-    <main className="dark:bg-slate-900 m-0">
+    <main className="page-bg">
       <ToggleMode />
-      <h1 className="text-center text-4xl px-2">
-        <span className="w-full text-2xl sm:text-2xl bg-purple-700 dark:bg-purple-700 shadow-slate-400 dark:shadow-gray-700 text-white py-1 px-4 rounded-lg inline-block">
-          รายการหนังสือทั้งหมด
-        </span>
-      </h1>
-      <div className="text-center text-4xl  pb-5 m-1">
+
+      {/* Header */}
+      <header className="sticky top-0 z-20 flex items-center justify-center gap-3 flex-wrap px-4 py-2"
+        style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)" }}>
+        <h1 className="page-header-badge">
+          📖 รายการหนังสือทั้งหมด
+        </h1>
         <Link to={"/"}>
-          <BigButton title="อ่านอะไรดี" onclick={() => {}} />
+          <BigButton title="อ่านอะไรดี" onclick={() => {}} small />
         </Link>
-      </div>
+      </header>
+
       <ShowAllBook />
     </main>
   );

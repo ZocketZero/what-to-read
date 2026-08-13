@@ -3,21 +3,32 @@ import { checkDarkFromLocal } from "./CheckTheme"
 
 function ToggleMode() {
     const [isDark, setIsDark] = useState<boolean>(checkDarkFromLocal())
-    const [textState, setTextState] = useState<string>(checkDarkFromLocal() ? "🌚" : "🌞")
+    const [icon, setIcon] = useState<string>(checkDarkFromLocal() ? "🌚" : "🌞")
+
     function changeMode(): void {
         if (window.document.documentElement.classList.contains("dark")) {
             window.document.documentElement.classList.remove("dark")
-            setTextState("🌞")
+            setIcon("🌞")
+            setIsDark(false)
         } else {
             window.document.documentElement.classList.add("dark")
-            setTextState("🌚")
+            setIcon("🌚")
+            setIsDark(true)
         }
     }
-    return <div className="text-right text-4xl absolute top-0 right-0 p-2">
-        <button onClick={changeMode}>
-            {textState}
-        </button>
-    </div>
+
+    return (
+        <div className="absolute top-0 right-0 p-4">
+            <button
+                className="toggle-btn"
+                onClick={changeMode}
+                title={isDark ? "เปลี่ยนเป็นโหมดสว่าง" : "เปลี่ยนเป็นโหมดมืด"}
+                aria-label="toggle dark mode"
+            >
+                {icon}
+            </button>
+        </div>
+    )
 }
 
 export default ToggleMode;

@@ -15,12 +15,20 @@ const SingleBook: FC = () => {
     return <Navigate to={"/"} />;
   }
   document.title = theBook.name ?? "ไม่พบหนังสือ";
+
   return (
-    <main className="box-border  bg-purple-50 dark:bg-slate-900  min-h-screen">
+    <main className="page-bg flex flex-col items-center justify-center min-h-screen">
       <ToggleMode />
-      <div className="flex min-h-screen justify-center items-center flex-col">
+      <div className="flex flex-col items-center justify-center flex-1 px-4 gap-5 text-center">
+        <h1 className="book-title text-2xl sm:text-3xl max-w-xs sm:max-w-sm">
+          {theBook.name}
+        </h1>
         <Atropos shadowScale={1} activeOffset={40}>
-          <ImgShow name={theBook.name ?? "ไม่พบชื่อหนังสือ"} img={theBook.img ?? ""} url={theBook.link ?? ""} />
+          <ImgShow
+            name={theBook.name ?? "ไม่พบชื่อหนังสือ"}
+            img={theBook.img ?? ""}
+            url={theBook.link ?? ""}
+          />
         </Atropos>
       </div>
     </main>

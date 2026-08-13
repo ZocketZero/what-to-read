@@ -15,7 +15,6 @@ const App: FC = () => {
   // for random book
   const randomBook: Function = () => {
     let result: number = Math.floor(Math.random() * BookList.length);
-    // document.title = BookList[result].name; // change title by book's name
     setBook(BookList[result]);
   };
 
@@ -36,50 +35,73 @@ const App: FC = () => {
       }, 300);
     }
   }, [book]);
+
   return (
     <>
-      <main className="box-border  bg-purple-50 dark:bg-slate-900 min-h-screen">
+      <main className="page-bg flex flex-col">
         <ToggleMode />
-        <div className="text-center text-4xl pt-10 pb-5">
+
+        {/* Hero section */}
+        <section className="flex flex-col items-center justify-center flex-1 pt-16 pb-4 px-4 gap-7 text-center">
+
+          {/* Label above button */}
+          <p
+            className="text-sm font-medium tracking-widest uppercase"
+            style={{ color: "var(--text-3)", letterSpacing: "0.15em" }}
+          >
+            กดเพื่อสุ่มหนังสือ
+          </p>
+
+          {/* Main CTA */}
           <BigButton
             title="อ่านอะไรดี"
             onclick={() => {
-              // check count before start random
               if (count === 0) {
                 setCount(10);
                 randomBook();
               }
             }}
           />
-        </div>
-        <div className="text-center">
-          <div className="text-2xl p-2 text-slate-600 dark:text-white font-bold">
+
+          {/* Ornamental divider */}
+          <div className="ornament-divider w-full max-w-xs mx-auto">
+            ✦
+          </div>
+
+          {/* Book title */}
+          {book.name && (
             <a
-              className="hover:underline inline-block transition-all"
-              target={"_blank"}
+              className="book-title"
+              target="_blank"
+              rel="noopener noreferrer"
               href={`https://www.google.com/search?q=${book.name}`}
               title="คลิกเพื่อค้นหาหนังสือเล่มนี้บน Google"
             >
               {book.name}
             </a>
-          </div>
-        </div>
+          )}
 
-        <ImgShow
-          img={book.img ?? ""}
-          url={book.link ?? ""}
-          name={book.name ?? ""}
-        />
-        <div className="text-center p-1 text-slate-600 dark:text-white">
-          <a
-            title="คลิกเพื่อค้นหาผู้เขียนบน Google"
-            className="underline sm:no-underline hover:underline inline-block"
-            target={"_blank"}
-            href={`https://www.google.com/search?q=${book.writer}`}
-          >
-            ผู้เขียน <b>{book.writer}</b>
-          </a>
-        </div>
+          {/* Book cover */}
+          <ImgShow
+            img={book.img ?? ""}
+            url={book.link ?? ""}
+            name={book.name ?? ""}
+          />
+
+          {/* Author */}
+          {book.writer && (
+            <a
+              title="คลิกเพื่อค้นหาผู้เขียนบน Google"
+              className="author-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://www.google.com/search?q=${book.writer}`}
+            >
+              <span style={{ color: "var(--text-3)" }}>ผู้เขียน</span>
+              <span className="font-semibold">{book.writer}</span>
+            </a>
+          )}
+        </section>
       </main>
       <Footer />
     </>
